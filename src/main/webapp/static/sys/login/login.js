@@ -1,9 +1,9 @@
 
-layui.define(['setter','layer','table','element', 'form'], function(exports){
+layui.define(['layer','table','element', 'form'], function(exports){
   var $ = layui.$
       ,form = layui.form
-      ,setter = layui.setter
       ,admin = layui.admin;
+  var $body = $('body');
   form.render();
 
   //自定义验证
@@ -23,13 +23,13 @@ layui.define(['setter','layer','table','element', 'form'], function(exports){
     //数组的两个值分别代表：[正则匹配、匹配不符时的提示文字]
     ,password: [
       /^[\S]{4,12}$/
-      ,'密码必须6到12位，且不能出现空格'
+      ,'密码必须4到12位，且不能出现空格'
     ]
   });
   //提交
   form.on('submit(LAY-user-login-submit)', function(obj){
     //请求登入接口
-    admin.req({
+    $.ajax({
       url: '/login'
       ,type:'post'
       ,data: JSON.stringify(obj.field)
@@ -37,12 +37,13 @@ layui.define(['setter','layer','table','element', 'form'], function(exports){
             "Content-Type": "application/json;charse=UTF-8"
         }
       ,success: function(res){
+        console.log(res);
         //请求成功后，写入 access_token
         // layui.data(setter.tableName, {
         //   key: setter.request.tokenName
         //   ,value: res.data.access_token
         // });
-       if(res.success == true){
+       if(res.success == true ){
          //登入成功的提示与跳转
          layer.msg('登入成功', {
            offset: '15px'
@@ -51,9 +52,25 @@ layui.define(['setter','layer','table','element', 'form'], function(exports){
          }, function(){
            location.href = '/index'; //后台主页
          });
+       }else{
+         layer.msg(res.errorMessage)
+          $('#LAY-user-get-vercode').click();
+          $('#vercode').val("");
        }
-      }
+      },
+      // error: function (XMLHttpRequest, textStatus, errorThrown) {
+      //
+      //  layer.msg();
+      // }
     });
 
   });
+
+
+  //更换图形验证码
+  $body.on('click', '#LAY-user-get-vercode', function(){
+    var othis = $(this);
+    this.src = '/captcha?t='+ new Date().getTime()
+  });
+  exports('login', {}); //注意，这里是模块输出的核心，模块名必须和use时的模块名一致
 })

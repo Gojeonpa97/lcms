@@ -1,11 +1,14 @@
 package com.lcms.modules.system.login.service.impl;
 
 import com.lcms.common.domain.entity.BaseResult;
+import com.lcms.common.exception.ServiceException;
 import com.lcms.common.utils.MD5Util;
+import com.lcms.modules.system.login.domain.enums.LoginErrorCodeEnum;
 import com.lcms.modules.system.login.domain.vo.LoginVo;
 import com.lcms.modules.system.login.service.LoginService;
 import com.lcms.modules.system.user.domain.entity.UserEntity;
 import com.lcms.modules.system.user.service.UserService;
+import com.wf.captcha.utils.CaptchaUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -25,32 +28,29 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public BaseResult<Object> login(LoginVo loginVo, HttpServletRequest request) {
         BaseResult<Object> result = new BaseResult<>();
-        if(StringUtils.isBlank(loginVo.getUsername())){
-
-        }
-        UserEntity user = userService.findUserByName(loginVo.getUsername());
-        if(user == null){
-
-        }
-        UsernamePasswordToken token = new UsernamePasswordToken(loginVo.getUsername(), MD5Util.encrypt(loginVo.getPassword()).toCharArray());
-        Subject subject = SecurityUtils.getSubject();
         try {
+            if(!CaptchaUtil.ver(loginVo.getCode(),request)){
+                throw new ServiceException(LoginErrorCodeEnum.E10208,LoginErrorCodeEnum.E10208.getText());
+            }
+            if(StringUtils.isBlank(loginVo.getUsername())){
+                throw new ServiceException(LoginErrorCodeEnum.E10202,LoginErrorCodeEnum.E10202.getText());
+            }
+            UserEntity user = userService.findUserByName(loginVo.getUsername());
+            if(user == null){
+                throw new ServiceException(LoginErrorCodeEnum.E10202,LoginErrorCodeEnum.E10202.getText());
+            }
+            UsernamePasswordToken token = new UsernamePasswordToken(loginVo.getUsername(), MD5Util.encrypt(loginVo.getPassword()).toCharArray());
+            Subject subject = SecurityUtils.getSubject();
             subject.login(token);
-        }catch (UnknownAccountException e){
-            log.error("账户不存在");
-            result.setErrorMessage("账户不存在");
-        }catch (DisabledAccountException e){
-            log.error("账户已禁用");
-            result.setErrorMessage("账户已禁用");
-        }catch(IncorrectCredentialsException e){
-            log.error("密码错误");
-            result.setErrorMessage("密码错误");
+            result.setSuccess(true);
+            result.setCode("0");
+            return result;
+        }catch(AuthenticationException e){
+            log.error("用户名或密码错误");
+            throw new ServiceException(LoginErrorCodeEnum.E10202,LoginErrorCodeEnum.E10202.getText());
         }catch (RuntimeException e){
-            log.error("未知错误");
-            result.setErrorMessage("未知错误");
+            log.error(e.getMessage());
+            throw new ServiceException(e.getMessage());
         }
-        result.setSuccess(true);
-        result.setCode("0");
-        return result;
     }
 }

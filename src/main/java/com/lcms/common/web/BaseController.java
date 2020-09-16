@@ -1,15 +1,17 @@
 package com.lcms.common.web;
 
+import com.lcms.common.domain.IEnum;
 import com.lcms.common.domain.entity.BaseResult;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class BaseController {
+public abstract class BaseController {
 
     public <T> BaseResult<T> returnSucceed(T t) {
         BaseResult<T> base = new BaseResult<T>();
         base.setSuccess(true);
         base.setCode("0");
+        base.setData(t);
         return base;
     }
 
@@ -28,7 +30,7 @@ public class BaseController {
         return base;
     }
 
-    public <T> BaseResult<T> returnFailed(String errorCode, String errorMessage) {
+    public <T> BaseResult<T> returnFailed(IEnum errorCode, String errorMessage) {
         BaseResult<T> base = new BaseResult<T>();
         base.setSuccess(false);
         base.setErrorCode(errorCode);

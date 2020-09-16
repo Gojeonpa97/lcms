@@ -35,24 +35,24 @@
             </ul>
             <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
 
-                <li class="layui-nav-item" lay-unselect>
-                    <a lay-href="app/message/index.html" layadmin-event="message" lay-text="消息中心">
-                        <i class="layui-icon layui-icon-notice"></i>
+                <%--<li class="layui-nav-item" lay-unselect>
+                   <a lay-href="app/message/index.html" layadmin-event="message" lay-text="消息中心">
+                       <i class="layui-icon layui-icon-notice"></i>
 
-                        <!-- 如果有新消息，则显示小圆点 -->
-                        <span class="layui-badge-dot"></span>
-                    </a>
-                </li>
-                <li class="layui-nav-item layui-hide-xs" lay-unselect>
-                    <a href="javascript:;" layadmin-event="theme">
-                        <i class="layui-icon layui-icon-theme"></i>
-                    </a>
-                </li>
-                <li class="layui-nav-item layui-hide-xs" lay-unselect>
-                    <a href="javascript:;" layadmin-event="note">
-                        <i class="layui-icon layui-icon-note"></i>
-                    </a>
-                </li>
+                       <!-- 如果有新消息，则显示小圆点 -->
+                       <span class="layui-badge-dot"></span>
+                   </a>
+               </li>
+              <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                   <a href="javascript:;" layadmin-event="theme">
+                       <i class="layui-icon layui-icon-theme"></i>
+                   </a>
+               </li>
+               <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                   <a href="javascript:;" layadmin-event="note">
+                       <i class="layui-icon layui-icon-note"></i>
+                   </a>
+               </li>--%>
                 <li class="layui-nav-item layui-hide-xs" lay-unselect>
                     <a href="javascript:;" layadmin-event="fullscreen">
                         <i class="layui-icon layui-icon-screen-full"></i>
@@ -63,7 +63,7 @@
                         <cite>${ShiroUtils.getSysUsername()}</cite>
                     </a>
                     <dl class="layui-nav-child">
-                        <dd><a lay-href="set/user/info.html">基本资料</a></dd>
+                        <dd><a lay-href="/sys/userCenter">个人中心</a></dd>
                         <dd><a lay-href=onclick="resetPassword()">修改密码</a></dd>
                         <hr>
                         <dd style="text-align: center;"><a lay-href="/logout">退出</a></dd>

@@ -1,5 +1,6 @@
 package com.lcms.common.web;
 
+import com.lcms.common.domain.IEnum;
 import com.lcms.common.domain.entity.BaseResult;
 
 public class BaseAction {
@@ -16,7 +17,7 @@ public class BaseAction {
         return base;
     }
 
-    public <T> BaseResult<T> returnFailed(String errorCode, String errorMessage) {
+    public <T> BaseResult<T> returnFailed(IEnum errorCode, String errorMessage) {
         BaseResult<T> base = new BaseResult<T>();
         base.setSuccess(false);
         base.setErrorCode(errorCode);

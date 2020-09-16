@@ -9,12 +9,17 @@ public class RestUserController {
 
 
     @RequestMapping(value = "/user")
-    public String sysUser(){
+    public String sysUser()throws Exception{
         return "sys/user/userList";
     }
 
     @RequestMapping("/userAdd")
-    public String userAdd(){
+    public String userAdd()throws Exception{
         return "sys/user/user_add";
+    }
+
+    @RequestMapping("/userCenter")
+    public String userCenter()throws Exception{
+        return"sys/user/userinfo";
     }
 }

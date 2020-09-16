@@ -13,7 +13,7 @@ html,body,#LAY_app{height:100%;}
 #LAY-user-login,
 .layadmin-user-display-show{display: block !important;} 
 .layadmin-user-login{
-  background-image: url("/pages/statics/public/images/bg-login.jpg");
+  background-image: url("/static/public/images/bg-login.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   min-height: 100vh;
