@@ -11,8 +11,13 @@ public interface UserService {
 
     UserEntity findUserByName(String username);
 
-    IPage<UserEntity> queryUsers(BaseVo baseVo);
+    IPage<UserEntity> queryUsers(UserEntity user);
 
-    void delete(String id);
+    void delete(Long id);
+    
+    int insertUser(UserEntity user);
 
+    UserEntity selectByPrimaryKey(Long id);
+    
+    int updateByPrimaryKey(UserEntity record);
 }

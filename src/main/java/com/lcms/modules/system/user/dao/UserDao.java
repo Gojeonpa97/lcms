@@ -15,4 +15,6 @@ public interface UserDao extends BaseMapper<UserEntity> {
     int updateByPrimaryKey(UserEntity record);
 
     UserEntity findUserByName(String username);
+    
+    int updateStatus(Long id);
 }

@@ -13,7 +13,7 @@ import java.util.Date;
  * @author 
  */
 @TableName(value = "sys_user")
-public class UserEntity implements Serializable {
+public class UserEntity extends BaseVo implements Serializable{
     /**
      * 用户ID
      */
