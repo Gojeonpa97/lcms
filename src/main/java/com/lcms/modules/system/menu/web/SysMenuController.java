@@ -1,6 +1,9 @@
 package com.lcms.modules.system.menu.web;
 
+import com.lcms.common.domain.entity.BaseResult;
+import com.lcms.common.web.BaseController;
 import com.lcms.modules.system.menu.domain.dto.SysMenuDto;
+import com.lcms.modules.system.menu.domain.entity.SysMenu;
 import com.lcms.modules.system.menu.service.SysMenuService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +15,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping(value = "/sys/menu")
-public class SysMenuController {
+public class SysMenuController extends BaseController {
 
     @Autowired
     private SysMenuService sysMenuService;
@@ -20,8 +23,16 @@ public class SysMenuController {
     @ApiOperation(value = "菜单")
     @ResponseBody
     @RequestMapping(value = "/findAllMenuByUserId")
-    public List<SysMenuDto> findAllMenuByUserId(){
+    public BaseResult<Object> findAllMenuByUserId(){
         List<SysMenuDto> allMenuByUserId = sysMenuService.findAllMenuByUserId();
-        return allMenuByUserId;
+        return returnSucceed(allMenuByUserId);
+    }
+
+    @ApiOperation(value = "菜单")
+    @ResponseBody
+    @RequestMapping(value = "/findAllMenu")
+    public BaseResult<Object> findAllMenu(){
+        List<SysMenu> allMenu = sysMenuService.findAllMenu();
+        return returnSucceed(allMenu);
     }
 }

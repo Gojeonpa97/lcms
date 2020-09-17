@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.lcms.common.shiro.utils.ShiroUtils;
 import com.lcms.modules.system.menu.dao.SysMenuDao;
 import com.lcms.modules.system.menu.domain.dto.SysMenuDto;
+import com.lcms.modules.system.menu.domain.entity.SysMenu;
 import com.lcms.modules.system.menu.service.SysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,13 @@ public class SysMenuServiceImpl implements SysMenuService {
        }
         return resultList;
     }
+
+    @Override
+    public List<SysMenu> findAllMenu() {
+        List<SysMenu> menuList = sysMenuDao.selectList(null);
+        return menuList;
+    }
+
     public List<SysMenuDto> menuChild(String id,List<SysMenuDto> menuList){
         List<SysMenuDto> menuDtos = Lists.newArrayList();
         for (SysMenuDto menuDto : menuList){
