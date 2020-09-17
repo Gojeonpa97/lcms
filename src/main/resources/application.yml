@@ -22,7 +22,8 @@ spring:
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
-
+  aop:
+    auto: true
 #mybatis
 mybatis-plus:
   mapper-locations: classpath:/mybatis_mysql/**/*Mapper.xml

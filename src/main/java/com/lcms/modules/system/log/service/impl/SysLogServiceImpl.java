@@ -48,7 +48,7 @@ public class SysLogServiceImpl implements SysLogService {
         log.setBrowser(userAgent.getBrowser().getName());
         log.setCreateTime(new Date());
         log.setContent(operateContent(joinPoint, methodName, ip, request));
-//        sysLogDao.insert(log);
+        //sysLogDao.insert(log);
     }
 
     @Override

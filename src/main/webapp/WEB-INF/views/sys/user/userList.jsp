@@ -55,7 +55,8 @@
         <div class="layui-card-body">
             <div style="padding-bottom: 10px;">
                 <button class="layui-btn layui-btn-danger layui-btn-sm" data-type="batchdel"><i class="layui-icon layui-icon-delete"></i>删除</button>
-                <a lay-href="/sys/userAdd" class="layui-btn layui-btn-normal layui-btn-sm"><i class="layui-icon">&#xe608;</i>添加</a>
+                <!-- <a lay-href="/sys/userAdd" class="layui-btn layui-btn-normal layui-btn-sm"><i class="layui-icon">&#xe608;</i>添加</a> -->
+                <button class="layui-btn layuiadmin-btn-useradmin" data-type="add">添加</button>
             </div>
 
             <table id="LAY-user-manage" lay-filter="LAY-user-manage"></table>
@@ -64,12 +65,15 @@
             </script>
             <script type="text/html" id="table-useradmin-webuser">
                 <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
-                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-href="/sys/userAdd"><i class="layui-icon layui-icon-edit"></i>编辑</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
             </script>
+            <!-- <a class="layui-btn layui-btn-normal layui-btn-xs" lay-href="/sys/userAdd"><i class="layui-icon layui-icon-edit"></i>编辑</a> -->
         </div>
     </div>
 </div>
+
+
+
 
 <script src="${staticPath}/common/layui/layui.js"></script>
 <script>
@@ -78,7 +82,7 @@
     }).extend({
         user:'sys/user/user'
         ,index: 'common/js/lib/index' //主入口模块
-    }).use('user','index'); //加载入口
+    }).use(['user','index','table']); 
 </script>
 </body>
 </html>
