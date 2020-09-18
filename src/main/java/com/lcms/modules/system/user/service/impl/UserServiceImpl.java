@@ -37,9 +37,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public IPage<UserEntity> queryUsers(UserEntity user) {
     	QueryWrapper<UserEntity> wrapper = new QueryWrapper<>();
-    	if(StringUtils.isNotBlank(String.valueOf(user.getId()))){
-    		wrapper.like("id", user.getId());
-    	}
+    	wrapper.eq("del_flag", 0);
     	if(StringUtils.isNotBlank(user.getUsername())){
     		wrapper.like("username", user.getUsername());
     	}
@@ -49,7 +47,7 @@ public class UserServiceImpl implements UserService {
     	if(StringUtils.isNotBlank(user.getSex())){
     		wrapper.like("sex", user.getSex());
     	}
-        IPage<UserEntity> list = userDao.selectPage(new Page<>(user.getPageSize(),user.getPageNum()), wrapper);
+        IPage<UserEntity> list = userDao.selectPage(new Page<UserEntity>(user.getPageSize(),user.getPageNum()), wrapper);
         return list;
     }
 

@@ -17,12 +17,6 @@
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
             <div class="layui-form-item">
                 <div class="layui-inline">
-                    <label class="layui-form-label">ID</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="id" placeholder="请输入" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
                     <label class="layui-form-label">用户名</label>
                     <div class="layui-input-block">
                         <input type="text" name="username" placeholder="请输入" autocomplete="off" class="layui-input">
@@ -38,7 +32,7 @@
                     <label class="layui-form-label">性别</label>
                     <div class="layui-input-block">
                         <select name="sex">
-                            <option value="0">不限</option>
+                            <option>不限</option>
                             <option value="1">男</option>
                             <option value="2">女</option>
                         </select>
