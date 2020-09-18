@@ -59,7 +59,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int insertUser(UserEntity user) {
 		UserEntity userInfo = (UserEntity) SecurityUtils.getSubject().getPrincipal();
-		user.setPassword(MD5Util.encrypt(user.getPassword()));
 		user.setDelFlag("0");
 		user.setStatus("0");
 		user.setUserType("00");
@@ -77,7 +76,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int updateByPrimaryKey(UserEntity user) {
 		UserEntity userInfo = (UserEntity) SecurityUtils.getSubject().getPrincipal();
-		user.setPassword(MD5Util.encrypt(user.getPassword()));
 		user.setUpdateUser(userInfo.getUsername());
 		System.out.println(new Date(System.currentTimeMillis()));
 		user.setUpdateTime(new Date(System.currentTimeMillis()));

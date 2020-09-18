@@ -33,7 +33,7 @@
                     <label class="layui-form-label">性别</label>
                     <div class="layui-input-block">
                         <select name="sex">
-                            <option>不限</option>
+                            <option value="">不限</option>
                             <option value="1">男</option>
                             <option value="2">女</option>
                         </select>
