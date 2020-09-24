@@ -1,5 +1,6 @@
 package com.lcms.modules.system.role.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lcms.common.domain.entity.BaseEntity;
@@ -33,4 +34,14 @@ public class SysRole extends BaseEntity {
      */
     private String description;
 
+    /**
+     * 当前页数
+     */
+    @TableField(select=false)
+    private long pageSize;
+    /**
+     * 每页条数
+     */
+    @TableField(select=false)
+    private long pageNum;
 }

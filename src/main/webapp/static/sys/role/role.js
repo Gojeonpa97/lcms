@@ -23,8 +23,29 @@ layui.define(['layer','table', 'form'], function(exports){
       ,{field: 'createTime', title: '创建时间'}
       ,{field: 'description', title: '具体描述'}
       ,{title: '操作', width: 150, align: 'center', fixed: 'right', toolbar: '#table-useradmin-admin'}
-    ]]
-    ,text: '对不起，加载出现异常！'
+    ]],
+    done: function(res, curr, count){
+      //如果是异步请求数据方式，res即为你接口返回的信息。
+      //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+      $("[data-field='name']").children().each(function(){
+        if($(this).text()=='0'){
+          $(this).text("管理员")
+        }else if($(this).text()=='1'){
+          $(this).text("超级管理员")
+        }else if($(this).text()=='2'){
+          $(this).text("纠错员")
+        }else if($(this).text()=='3'){
+          $(this).text("采购员")
+        }else if($(this).text()=='4'){
+          $(this).text("推销员")
+        }else if($(this).text()=='5'){
+          $(this).text("运营人员")
+        }else if($(this).text()=='6'){
+          $(this).text("编辑")
+        }
+      })
+    },
+    text: '对不起，加载出现异常！'
   });
   //监听工具条
   table.on('tool(LAY-user-back-role)', function(obj){
@@ -100,20 +121,81 @@ layui.define(['layer','table', 'form'], function(exports){
         });
       });
     },
-    edit:function () {
-      layer.msg("12312");
+    add: function(){
       layer.open({
         type: 2
-        ,title: '添加新角色'
-        ,content: 'roleform.html'
-        ,area: ['500px', '480px']
+        ,title: '添加角色'
+        ,content: '/sys/addRole'
+        ,maxmin: true
+        ,area: ['550px', '300px']
         ,btn: ['确定', '取消']
+        ,yes: function(index, layero){
+          var iframeWindow = window['layui-layer-iframe'+ index]
+              ,submitID = 'LAY-role-front-submit'
+              ,submit = layero.find('iframe').contents().find('#'+ submitID);
+          //监听提交
+          iframeWindow.layui.form.on('submit('+ submitID +')', function(data){
+            var field = data.field; //获取提交的字段
+            console.log(field);
+            //提交 Ajax 成功后，静态更新表格中的数据
+            //$.ajax({});
+            $.ajax({
+              type:"post",
+              url:"/v1/system/role/insert",
+              data:field,
+              success:function(data){
+                table.reload('LAY-user-back-role');
+                layer.close(index);
+              }
+            });
+          });
+          submit.trigger('click');
+        }
       });
     }
   };
+  table.on('tool(LAY-user-back-role)', function(obj){
+    var data = obj.data;
+    var id = data.id;
+    layer.open({
+      type: 2
+      ,title: '修改用户'
+      ,content: '/sys/addRole?id='+id
+      ,maxmin: true
+      ,area: ['550px', '300px']
+      ,btn: ['确定', '取消']
+      ,yes: function(index, layero){
+        var iframeWindow = window['layui-layer-iframe'+ index]
+            ,submitID = 'LAY-role-front-submit'
+            ,submit = layero.find('iframe').contents().find('#'+ submitID);
+        //监听提交
+        iframeWindow.layui.form.on('submit('+ submitID +')', function(data){
+          var field = data.field;
+          //提交 Ajax 成功后，静态更新表格中的数据
+          $.ajax({
+            type:"post",
+            url:"/v1/system/role/update",
+            data:field,
+            success:function(data){
+              table.reload('LAY-user-back-role'); //数据刷新
+              layer.close(index); //关闭弹层
+            }
+          });
+        });
+        submit.trigger('click');
+      }
+    });
+  });
+  form.on('submit(LAY-role-front-search)', function(data){
+    var field = data.field;
+    console.log(field);
+    //执行重载
+    table.reload('LAY-user-back-role', {
+      where: field
+    });
+  });
   //监听性别操作
   form.on('switch(sexDemo)', function(obj){
-    console.log("123123"+obj)
     layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
   });
   exports('role', {}); //注意，这里是模块输出的核心，模块名必须和use时的模块名一致

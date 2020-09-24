@@ -21,8 +21,8 @@
                     角色筛选
                 </div>
                 <div class="layui-inline">
-                    <select name="rolename" lay-filter="LAY-user-adminrole-type">
-                        <option value="-1">全部角色</option>
+                    <select name="name" lay-filter="LAY-user-adminrole-type">
+                        <option value="">全部角色</option>
                         <option value="0">管理员</option>
                         <option value="1">超级管理员</option>
                         <option value="2">纠错员</option>
@@ -31,6 +31,11 @@
                         <option value="5">运营人员</option>
                         <option value="6">编辑</option>
                     </select>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-useradmin" lay-submit lay-filter="LAY-role-front-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
                 </div>
             </div>
         </div>
