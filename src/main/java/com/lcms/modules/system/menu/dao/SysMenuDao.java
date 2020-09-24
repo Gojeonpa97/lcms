@@ -9,11 +9,11 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface SysMenuDao extends BaseMapper<SysMenu> {
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(Integer id);
 
     int insertSelective(SysMenu record);
 
-    SysMenu selectByPrimaryKey(Long id);
+    SysMenu selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(SysMenu record);
 

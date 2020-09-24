@@ -9,7 +9,7 @@ import java.util.List;
 @Setter
 public class SysMenuDto {
 
-    private String id;
+    private String sid;
 
     private String pid;
 

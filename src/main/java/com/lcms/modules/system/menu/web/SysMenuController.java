@@ -1,6 +1,7 @@
 package com.lcms.modules.system.menu.web;
 
-import com.lcms.common.domain.entity.BaseResult;
+
+import com.lcms.common.domain.dto.BaseResult;
 import com.lcms.common.web.BaseController;
 import com.lcms.modules.system.menu.domain.dto.SysMenuDto;
 import com.lcms.modules.system.menu.domain.entity.SysMenu;

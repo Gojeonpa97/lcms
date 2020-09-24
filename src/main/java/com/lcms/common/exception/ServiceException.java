@@ -1,6 +1,7 @@
 package com.lcms.common.exception;
 
 import com.lcms.common.domain.IEnum;
+import com.lcms.modules.system.log.domain.entity.SysLog;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -19,6 +20,7 @@ public class ServiceException extends RuntimeException {
     public ServiceException(IEnum errorCode,String message){
         super(message);
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        SysLog log = new SysLog();
         this.errorCode=errorCode;
     }
     public IEnum getErrorCode() {

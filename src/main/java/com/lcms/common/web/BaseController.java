@@ -1,7 +1,7 @@
 package com.lcms.common.web;
 
 import com.lcms.common.domain.IEnum;
-import com.lcms.common.domain.entity.BaseResult;
+import com.lcms.common.domain.dto.BaseResult;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController

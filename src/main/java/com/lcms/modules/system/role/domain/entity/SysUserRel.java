@@ -1,5 +1,9 @@
 package com.lcms.modules.system.role.domain.entity;
 
+import com.lcms.common.domain.entity.BaseEntity;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -7,96 +11,27 @@ import java.util.Date;
  * sys_user_rel
  * @author 
  */
-public class SysUserRel implements Serializable {
-    private Integer id;
+@Getter
+@Setter
+public class SysUserRel extends BaseEntity {
 
-    private Integer reloId;
+    private static final long serialVersionUID = -2277363520131335655L;
 
+    /**
+     * 角色SID
+     */
+    private Integer roleSid;
+
+    /**
+     * 备注说明
+     */
     private String description;
 
-    private Integer userId;
+    /**
+     * 用户SID
+     */
+    private Integer userSid;
 
-    private String createUser;
 
-    private Date createTime;
 
-    private String updateUser;
-
-    private Date updateTime;
-
-    private String delFlag;
-
-    private static final long serialVersionUID = 1L;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getReloId() {
-        return reloId;
-    }
-
-    public void setReloId(Integer reloId) {
-        this.reloId = reloId;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public String getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(String createUser) {
-        this.createUser = createUser;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getUpdateUser() {
-        return updateUser;
-    }
-
-    public void setUpdateUser(String updateUser) {
-        this.updateUser = updateUser;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getDelFlag() {
-        return delFlag;
-    }
-
-    public void setDelFlag(String delFlag) {
-        this.delFlag = delFlag;
-    }
 }

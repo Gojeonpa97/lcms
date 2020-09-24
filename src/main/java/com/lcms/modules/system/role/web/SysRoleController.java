@@ -1,6 +1,6 @@
 package com.lcms.modules.system.role.web;
 
-import com.lcms.common.domain.entity.BaseResult;
+import com.lcms.common.domain.dto.BaseResult;
 import com.lcms.common.domain.vo.BaseVo;
 import com.lcms.common.web.BaseController;
 import com.lcms.modules.system.role.service.SysRoleService;

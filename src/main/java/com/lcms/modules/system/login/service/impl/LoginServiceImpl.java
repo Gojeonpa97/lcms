@@ -1,6 +1,7 @@
 package com.lcms.modules.system.login.service.impl;
 
-import com.lcms.common.domain.entity.BaseResult;
+
+import com.lcms.common.domain.dto.BaseResult;
 import com.lcms.common.exception.ServiceException;
 import com.lcms.common.utils.MD5Util;
 import com.lcms.modules.system.login.domain.enums.LoginErrorCodeEnum;

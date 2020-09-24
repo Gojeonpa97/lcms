@@ -1,7 +1,7 @@
 package com.lcms.common.web;
 
 import com.google.common.base.Throwables;
-import com.lcms.common.domain.entity.BaseResult;
+import com.lcms.common.domain.dto.BaseResult;
 import com.lcms.common.domain.enums.ErrorCodeEnum;
 import com.lcms.common.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;

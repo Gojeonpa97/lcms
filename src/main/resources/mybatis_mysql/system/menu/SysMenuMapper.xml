@@ -2,13 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lcms.modules.system.menu.dao.SysMenuDao">
   <resultMap id="BaseResultMap" type="com.lcms.modules.system.menu.domain.entity.SysMenu">
-    <id column="id" jdbcType="BIGINT" property="id" />
+    <id column="sid" jdbcType="INTEGER" property="sid" />
+    <result column="pid" jdbcType="INTEGER" property="pid" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="pid" jdbcType="BIGINT" property="pid" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="menu_level" jdbcType="VARCHAR" property="menuLevel" />
     <result column="sort" jdbcType="INTEGER" property="sort" />
     <result column="url" jdbcType="VARCHAR" property="url" />
-    <result column="type" jdbcType="CHAR" property="type" />
-    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="menu_type" jdbcType="VARCHAR" property="menuType" />
     <result column="perms" jdbcType="VARCHAR" property="perms" />
     <result column="icon" jdbcType="VARCHAR" property="icon" />
     <result column="create_user" jdbcType="VARCHAR" property="createUser" />
@@ -16,50 +17,72 @@
     <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="del_flag" property="delFlag" typeHandler="com.lcms.common.mybatis.utils.ValuedEnumTypeHandler"  />
   </resultMap>
   <sql id="Base_Column_List">
-    id, `name`, pid, sort, url, `type`, `status`, perms, icon, create_user, create_time, 
-    update_user, update_time, description
+    sid, pid, `name`, code, menu_level, sort, url, menu_type, perms, icon, create_user,
+    create_time, update_user, update_time, del_flag, description
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from sys_menu
-    where id = #{id,jdbcType=BIGINT}
+    where sid = #{sid,jdbcType=INTEGER}
   </select>
   <select id="findAllMenuByUserId" resultType="com.lcms.modules.system.menu.domain.dto.SysMenuDto" parameterType="java.lang.String">
-      select m.* from sys_menu m left join sys_role_menu rm on m.id = rm.menu_id
-                         left join sys_role r on  r.id = rm.role_id
-                         left join sys_user_rel ur on ur.relo_id=r.id
-                         left join sys_user u on u.id = ur.user_id  where u.id = #{userId};
+
+select DISTINCT sm.*
+  from sys_menu sm
+ where sm.sid in
+       (select srm.menu_sid
+          from sys_role_menu srm
+         where srm.role_sid in
+               (select sr.sid
+                  from sys_role sr
+                 where sr.sid in (select sur.role_sid
+                                   from sys_user_rel sur
+                                  where sur.user_sid in
+                                        (select su.sid
+                                           from sys_user su
+                                          where SU.DEL_FLAG = '0'
+                                            and su.sid = #{userId}
+										)and sur.del_flag = '0'
+								  )and sr.del_flag = '0'
+				)and srm.del_flag = '0'
+		)and sm.del_flag = '0' order by sm.sort asc;
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from sys_menu
-    where id = #{id,jdbcType=BIGINT}
+    where sid = #{sid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.lcms.modules.system.menu.domain.entity.SysMenu">
-    insert into sys_menu (id, `name`, pid, 
-      sort, url, `type`, `status`, 
-      perms, icon, create_user, 
-      create_time, update_user, update_time, 
-      description)
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{pid,jdbcType=BIGINT}, 
-      #{sort,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{type,jdbcType=CHAR}, #{status,jdbcType=CHAR}, 
-      #{perms,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{description,jdbcType=VARCHAR})
+  <insert id="insert" keyColumn="sid" keyProperty="sid" parameterType="com.lcms.modules.system.menu.domain.entity.SysMenu" useGeneratedKeys="true">
+    insert into sys_menu (pid, `name`, code,
+      menu_level, sort, url,
+      menu_type, perms, icon,
+      create_user, create_time, update_user,
+      update_time, del_flag, description
+      )
+    values (#{pid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
+      #{menuLevel,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR},
+      #{menuType,jdbcType=VARCHAR}, #{perms,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR},
+      #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR},
+      #{updateTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.lcms.modules.system.menu.domain.entity.SysMenu">
+  <insert id="insertSelective" keyColumn="sid" keyProperty="sid" parameterType="com.lcms.modules.system.menu.domain.entity.SysMenu" useGeneratedKeys="true">
     insert into sys_menu
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
+      <if test="pid != null">
+        pid,
       </if>
       <if test="name != null">
         `name`,
       </if>
-      <if test="pid != null">
-        pid,
+      <if test="code != null">
+        code,
+      </if>
+      <if test="menuLevel != null">
+        menu_level,
       </if>
       <if test="sort != null">
         sort,
@@ -67,11 +90,8 @@
       <if test="url != null">
         url,
       </if>
-      <if test="type != null">
-        `type`,
-      </if>
-      <if test="status != null">
-        `status`,
+      <if test="menuType != null">
+        menu_type,
       </if>
       <if test="perms != null">
         perms,
@@ -91,19 +111,25 @@
       <if test="updateTime != null">
         update_time,
       </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
       <if test="description != null">
         description,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
+      <if test="pid != null">
+        #{pid,jdbcType=INTEGER},
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="pid != null">
-        #{pid,jdbcType=BIGINT},
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="menuLevel != null">
+        #{menuLevel,jdbcType=VARCHAR},
       </if>
       <if test="sort != null">
         #{sort,jdbcType=INTEGER},
@@ -111,11 +137,8 @@
       <if test="url != null">
         #{url,jdbcType=VARCHAR},
       </if>
-      <if test="type != null">
-        #{type,jdbcType=CHAR},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=CHAR},
+      <if test="menuType != null">
+        #{menuType,jdbcType=VARCHAR},
       </if>
       <if test="perms != null">
         #{perms,jdbcType=VARCHAR},
@@ -135,6 +158,9 @@
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=VARCHAR},
+      </if>
       <if test="description != null">
         #{description,jdbcType=VARCHAR},
       </if>
@@ -143,11 +169,17 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.lcms.modules.system.menu.domain.entity.SysMenu">
     update sys_menu
     <set>
+      <if test="pid != null">
+        pid = #{pid,jdbcType=INTEGER},
+      </if>
       <if test="name != null">
         `name` = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="pid != null">
-        pid = #{pid,jdbcType=BIGINT},
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="menuLevel != null">
+        menu_level = #{menuLevel,jdbcType=VARCHAR},
       </if>
       <if test="sort != null">
         sort = #{sort,jdbcType=INTEGER},
@@ -155,11 +187,8 @@
       <if test="url != null">
         url = #{url,jdbcType=VARCHAR},
       </if>
-      <if test="type != null">
-        `type` = #{type,jdbcType=CHAR},
-      </if>
-      <if test="status != null">
-        `status` = #{status,jdbcType=CHAR},
+      <if test="menuType != null">
+        menu_type = #{menuType,jdbcType=VARCHAR},
       </if>
       <if test="perms != null">
         perms = #{perms,jdbcType=VARCHAR},
@@ -179,27 +208,32 @@
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="remark != null">
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
         description = #{description,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where sid = #{sid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.lcms.modules.system.menu.domain.entity.SysMenu">
     update sys_menu
-    set `name` = #{name,jdbcType=VARCHAR},
-      pid = #{pid,jdbcType=BIGINT},
+    set pid = #{pid,jdbcType=INTEGER},
+      `name` = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      menu_level = #{menuLevel,jdbcType=VARCHAR},
       sort = #{sort,jdbcType=INTEGER},
       url = #{url,jdbcType=VARCHAR},
-      `type` = #{type,jdbcType=CHAR},
-      `status` = #{status,jdbcType=CHAR},
+      menu_type = #{menuType,jdbcType=VARCHAR},
       perms = #{perms,jdbcType=VARCHAR},
       icon = #{icon,jdbcType=VARCHAR},
       create_user = #{createUser,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_user = #{updateUser,jdbcType=VARCHAR},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
+      del_flag = #{delFlag,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
+    where sid = #{sid,jdbcType=INTEGER}
   </update>
 </mapper>

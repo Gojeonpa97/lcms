@@ -2,54 +2,49 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lcms.modules.system.role.dao.SysUserRelDao">
   <resultMap id="BaseResultMap" type="com.lcms.modules.system.role.domain.entity.SysUserRel">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="relo_id" jdbcType="INTEGER" property="reloId" />
+    <id column="sid" jdbcType="INTEGER" property="sid" />
+    <result column="role_sid" jdbcType="INTEGER" property="roleSid" />
     <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_sid" jdbcType="INTEGER" property="userSid" />
     <result column="create_user" jdbcType="VARCHAR" property="createUser" />
-    <result column="create_time" jdbcType="DATE" property="createTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
-    <result column="update_time" jdbcType="DATE" property="updateTime" />
-    <result column="del_flag" jdbcType="VARCHAR" property="delFlag" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del_flag" property="delFlag" typeHandler="com.lcms.common.mybatis.utils.ValuedEnumTypeHandler"  />
   </resultMap>
   <sql id="Base_Column_List">
-    id, relo_id, description, user_id, create_user, create_time, update_user, update_time, 
+    sid, role_sid, description, user_sid, create_user, create_time, update_user, update_time,
     del_flag
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from sys_user_rel
-    where id = #{id,jdbcType=INTEGER}
+    where sid = #{sid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sys_user_rel
-    where id = #{id,jdbcType=INTEGER}
+    where sid = #{sid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.lcms.modules.system.role.domain.entity.SysUserRel">
-    insert into sys_user_rel (id, relo_id, description, 
-      user_id, create_user, create_time, 
-      update_user, update_time, del_flag
-      )
-    values (#{id,jdbcType=INTEGER}, #{reloId,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, 
-      #{userId,jdbcType=INTEGER}, #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, 
-      #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=DATE}, #{delFlag,jdbcType=VARCHAR}
-      )
+    insert into sys_user_rel (role_sid, description, user_sid,
+      create_user, create_time, update_user,
+      update_time, del_flag)
+    values (#{roleSid,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{userSid,jdbcType=INTEGER},
+      #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR},
+      #{updateTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.lcms.modules.system.role.domain.entity.SysUserRel">
     insert into sys_user_rel
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="reloId != null">
-        relo_id,
+      <if test="roleSid != null">
+        role_sid,
       </if>
       <if test="description != null">
         description,
       </if>
-      <if test="userId != null">
-        user_id,
+      <if test="userSid != null">
+        user_sid,
       </if>
       <if test="createUser != null">
         create_user,
@@ -68,29 +63,26 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="reloId != null">
-        #{reloId,jdbcType=INTEGER},
+      <if test="roleSid != null">
+        #{roleSid,jdbcType=INTEGER},
       </if>
       <if test="description != null">
         #{description,jdbcType=VARCHAR},
       </if>
-      <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
+      <if test="userSid != null">
+        #{userSid,jdbcType=INTEGER},
       </if>
       <if test="createUser != null">
         #{createUser,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
-        #{createTime,jdbcType=DATE},
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateUser != null">
         #{updateUser,jdbcType=VARCHAR},
       </if>
       <if test="updateTime != null">
-        #{updateTime,jdbcType=DATE},
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="delFlag != null">
         #{delFlag,jdbcType=VARCHAR},
@@ -100,43 +92,43 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.lcms.modules.system.role.domain.entity.SysUserRel">
     update sys_user_rel
     <set>
-      <if test="reloId != null">
-        relo_id = #{reloId,jdbcType=INTEGER},
+      <if test="roleSid != null">
+        role_sid = #{roleSid,jdbcType=INTEGER},
       </if>
       <if test="description != null">
         description = #{description,jdbcType=VARCHAR},
       </if>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=INTEGER},
+      <if test="userSid != null">
+        user_sid = #{userSid,jdbcType=INTEGER},
       </if>
       <if test="createUser != null">
         create_user = #{createUser,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
-        create_time = #{createTime,jdbcType=DATE},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateUser != null">
         update_user = #{updateUser,jdbcType=VARCHAR},
       </if>
       <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=DATE},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="delFlag != null">
         del_flag = #{delFlag,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where sid = #{sid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.lcms.modules.system.role.domain.entity.SysUserRel">
     update sys_user_rel
-    set relo_id = #{reloId,jdbcType=INTEGER},
+    set role_sid = #{roleSid,jdbcType=INTEGER},
       description = #{description,jdbcType=VARCHAR},
-      user_id = #{userId,jdbcType=INTEGER},
+      user_sid = #{userSid,jdbcType=INTEGER},
       create_user = #{createUser,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=DATE},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
       update_user = #{updateUser,jdbcType=VARCHAR},
-      update_time = #{updateTime,jdbcType=DATE},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
       del_flag = #{delFlag,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    where sid = #{sid,jdbcType=INTEGER}
   </update>
 </mapper>

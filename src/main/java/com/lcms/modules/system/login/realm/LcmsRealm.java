@@ -2,12 +2,15 @@ package com.lcms.modules.system.login.realm;
 
 import com.lcms.modules.system.user.domain.entity.UserEntity;
 import com.lcms.modules.system.user.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
+@Slf4j
 public class LcmsRealm extends AuthorizingRealm {
 
     @Autowired
@@ -20,6 +23,8 @@ public class LcmsRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        log.info("进入授权");
+        SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         return null;
     }
 

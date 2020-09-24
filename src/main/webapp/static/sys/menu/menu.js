@@ -1,9 +1,9 @@
 
 layui.define(['layer','table','element','index', 'form','treetable'], function(exports){
 
-  var treetable = layui.treetable,
-  layer = layui.layer
-      ,form = layui.form;
+  var treetable = layui.treetable
+       ,layer = layui.layer
+       ,form = layui.form;
   form.render();
   //渲染表格
   var renderTable = function(){
@@ -12,7 +12,7 @@ layui.define(['layer','table','element','index', 'form','treetable'], function(e
       id:'menu',
       treeColIndex: 1,	//树形图标显示在第几列
       treeSpid: '0',		//最上级的父级id
-      treeIdName: 'id',	//id字段的名称
+      treeIdName: 'sid',	//id字段的名称
       treePidName: 'pid',	//父级节点字段
       treeDefaultClose: false,	//是否默认折叠
       treeLinkage: false,		//父级展开时是否自动展开所有子级

@@ -1,7 +1,7 @@
 package com.lcms.modules.system.log.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.lcms.common.domain.entity.BaseResult;
+import com.lcms.common.domain.dto.BaseResult;
 import com.lcms.common.domain.vo.BaseVo;
 import com.lcms.common.web.BaseController;
 import com.lcms.modules.system.log.domain.entity.SysLog;
@@ -19,7 +19,7 @@ public class SysLogController extends BaseController {
     private SysLogService sysLogService;
 
     @RequestMapping(value = "/v1/system/log/queryLogs")
-    public BaseResult<Object> queryLog(SysLog sysLog,BaseVo baseVo){
+    public BaseResult<Object> queryLog(SysLog sysLog, BaseVo baseVo){
         IPage<SysLog> sysLogIPage = sysLogService.queryLogs(sysLog,baseVo);
         return  returnSucceed(sysLogIPage.getRecords(),sysLogIPage.getTotal());
     }

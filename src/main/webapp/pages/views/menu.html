@@ -42,6 +42,9 @@
         var treetable = layui.treetable,
             layer = layui.layer
             ,form = layui.form;
+        var parent_json = eval('('+parent.json+')');
+        console.log(parent_json);
+        layer.msg(parent_json)
         form.render();
         //渲染表格
         var renderTable = function(){

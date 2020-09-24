@@ -2,55 +2,50 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lcms.modules.system.role.dao.SysRoleDao">
   <resultMap id="BaseResultMap" type="com.lcms.modules.system.role.domain.entity.SysRole">
-    <id column="id" jdbcType="BIGINT" property="id" />
+    <id column="sid" jdbcType="INTEGER" property="sid" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="sort" jdbcType="INTEGER" property="sort" />
-    <result column="status" jdbcType="CHAR" property="status" />
-    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
     <result column="create_user" jdbcType="VARCHAR" property="createUser" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del_flag" property="delFlag" typeHandler="com.lcms.common.mybatis.utils.ValuedEnumTypeHandler"  />
     <result column="description" jdbcType="VARCHAR" property="description" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, `name`, sort, `status`, del_flag, create_user, create_time, update_user, update_time, 
+    sid, `name`, code, del_flag, create_user, create_time, update_user, update_time,
     description
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from sys_role
-    where id = #{id,jdbcType=BIGINT}
+    where sid = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from sys_role
-    where id = #{id,jdbcType=BIGINT}
+    where sid = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.lcms.modules.system.role.domain.entity.SysRole">
-    insert into sys_role (id, `name`, sort, 
-      `status`, del_flag, create_user, 
+    insert into sys_role (sid, `name`, code,
+      del_flag, create_user,
       create_time, update_user, update_time, 
       description)
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, 
-      #{status,jdbcType=CHAR}, #{delFlag,jdbcType=CHAR}, #{createUser,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{description,jdbcType=VARCHAR})
+    values (#{sid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+      #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.lcms.modules.system.role.domain.entity.SysRole">
     insert into sys_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
+      <if test="sid != null">
+        sid,
       </if>
       <if test="name != null">
         `name`,
       </if>
-      <if test="sort != null">
-        sort,
-      </if>
-      <if test="status != null">
-        `status`,
+      <if test="code != null">
+        code,
       </if>
       <if test="delFlag != null">
         del_flag,
@@ -72,20 +67,17 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
+      <if test="sid != null">
+        #{sid,jdbcType=INTEGER},
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
       <if test="sort != null">
-        #{sort,jdbcType=INTEGER},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=CHAR},
+        #{code,jdbcType=VARCHAR},
       </if>
       <if test="delFlag != null">
-        #{delFlag,jdbcType=CHAR},
+        #{delFlag,jdbcType=VARCHAR},
       </if>
       <if test="createUser != null">
         #{createUser,jdbcType=VARCHAR},
@@ -99,9 +91,6 @@
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="description != null">
-        #{remark,jdbcType=VARCHAR},
-      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.lcms.modules.system.role.domain.entity.SysRole">
@@ -110,14 +99,11 @@
       <if test="name != null">
         `name` = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="sort != null">
-        sort = #{sort,jdbcType=INTEGER},
-      </if>
-      <if test="status != null">
-        `status` = #{status,jdbcType=CHAR},
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
       </if>
       <if test="delFlag != null">
-        del_flag = #{delFlag,jdbcType=CHAR},
+        del_flag = #{delFlag,jdbcType=VARCHAR},
       </if>
       <if test="createUser != null">
         create_user = #{createUser,jdbcType=VARCHAR},
@@ -131,23 +117,25 @@
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=VARCHAR},
+      </if>
       <if test="description != null">
         description = #{description,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where sid = #{sid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.lcms.modules.system.role.domain.entity.SysRole">
     update sys_role
     set `name` = #{name,jdbcType=VARCHAR},
-      sort = #{sort,jdbcType=INTEGER},
-      `status` = #{status,jdbcType=CHAR},
-      del_flag = #{delFlag,jdbcType=CHAR},
+      code = #{code,jdbcType=VARCHAR},
       create_user = #{createUser,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_user = #{updateUser,jdbcType=VARCHAR},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
+      del_flag = #{delFlag,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
+    where sid = #{sid,jdbcType=BIGINT}
   </update>
 </mapper>

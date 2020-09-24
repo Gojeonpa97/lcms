@@ -1,6 +1,7 @@
 package com.lcms.modules.system.login.web;
 
-import com.lcms.common.domain.entity.BaseResult;
+
+import com.lcms.common.domain.dto.BaseResult;
 import com.lcms.common.log.annotation.Log;
 import com.lcms.common.web.BaseAction;
 import com.lcms.modules.system.login.domain.vo.LoginVo;

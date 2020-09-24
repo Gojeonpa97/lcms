@@ -13,4 +13,8 @@ public class RestSysRoleController {
     public String role(HttpServletRequest request) throws Exception{
         return "sys/role/roleList";
     }
+    @RequestMapping(value = "/roleTree")
+    public String roleTree(HttpServletRequest request) throws Exception{
+        return "sys/role/roleTree";
+    }
 }
