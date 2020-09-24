@@ -15,13 +15,14 @@ public class RestUserController {
 
 	@Autowired
     private UserService userService;
-	
+
+    @Log(logType = "1", module = "用户管理", description = "用户管理 -> 查询用户页面")
     @RequestMapping(value = "/user")
     public String sysUser()throws Exception{
         return "sys/user/userList";
     }
 
-    @Log(logType = "操作日志", module = "用户管理", description = "用户管理 -> 添加用户")
+    @Log(logType = "1", module = "用户管理", description = "用户管理 -> 添加(修改)用户页面")
     @RequestMapping("/userAdd")
     public String userAdd(Long id,Model model)throws Exception{
     	if(id!=null){

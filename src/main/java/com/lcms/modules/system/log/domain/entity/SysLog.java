@@ -29,7 +29,7 @@ public class SysLog implements Serializable {
     private String content;
 
     /**
-     * 日志类型
+     * 日志类型(0登录日志  1操作日志  2异常日志)
      */
     private String logType;
 

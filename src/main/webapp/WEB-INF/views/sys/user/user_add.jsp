@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/views/base/sys_tag.jsp"%>
+<%@ page import="com.lcms.common.utils.MD5Util" %>
 <html>
 <head>
   <meta charset="utf-8">
@@ -31,12 +32,7 @@
         <input type="text" value="${user.username }" name="username" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
       </div>
     </div>
-    <div class="layui-form-item">
-      <label class="layui-form-label">密码</label>
-      <div class="layui-input-inline">
-        <input type="password" value="${user.password }" name="password" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
-      </div>
-    </div>
+      <input type="hidden" name="password" value="${MD5Util.encrypt("123456")}">
     <c:choose>
     	<c:when test="${user.id != null}">
     		<div class="layui-form-item" lay-filter="sex" style="display: none">

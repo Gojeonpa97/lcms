@@ -137,7 +137,7 @@
         url: '/sys/menu/findAllMenuByUserId',
         data: '',
         success: function (data) {
-            console.log(data.data)
+            console.log(data)
             $.each(data.data ,function (index, menu){
                 menuLi += '<li class = "layui-nav-item" >';
                 menuLi += '<a href="javascript:;" lay-tips= "'+menu.name+'" >';

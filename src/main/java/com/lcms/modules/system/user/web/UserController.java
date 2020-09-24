@@ -22,7 +22,7 @@ public class UserController extends BaseController {
     @Autowired
     private UserService userService;
 
-
+    @Log(logType = "1", module = "用户管理", description = "用户管理 -> 查询用户")
     @ApiOperation(value = "查询用户")
     @RequestMapping(value = "/v1/system/user/queryUsers")
     public BaseResult<Object> queryUsers(UserEntity user){
@@ -30,18 +30,20 @@ public class UserController extends BaseController {
         return returnSucceed(userEntityIPage.getRecords(),userEntityIPage.getTotal());
     }
 
+    @Log(logType = "1", module = "用户管理", description = "用户管理 -> 删除用户")
     @RequestMapping(value = "/v1/system/user/delete")
     public BaseResult<Object> delete(Long id){
         userService.delete(id);
        return returnSucceed(null);
     }
     
-    @Log(logType = "操作日志", module = "用户管理", description = "用户管理 -> 添加用户")
+    @Log(logType = "1", module = "用户管理", description = "用户管理 -> 添加用户")
     @RequestMapping(value = "/v1/system/user/insert")
     public void insertUser(UserEntity user){
     	userService.insertUser(user);
     }
-    
+
+    @Log(logType = "1", module = "用户管理", description = "用户管理 -> 修改用户")
     @RequestMapping(value = "/v1/system/user/update")
     public void updateUser(UserEntity user){
     	userService.updateByPrimaryKey(user);

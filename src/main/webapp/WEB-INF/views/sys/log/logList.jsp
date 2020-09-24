@@ -17,18 +17,6 @@
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
             <div class="layui-form-item">
                 <div class="layui-inline">
-                    <label class="layui-form-label">ID</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="id" placeholder="请输入" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">用户名</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="username" placeholder="请输入" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
                     <label class="layui-form-label">模块</label>
                     <div class="layui-input-block">
                         <input type="text" name="module" placeholder="请输入" autocomplete="off" class="layui-input">
@@ -39,9 +27,9 @@
                     <div class="layui-input-block">
                         <select name="logType">
                             <option value="">不限</option>
-                            <option value="登录日志">登录日志</option>
-                            <option value="操作日志">操作日志</option>
-                            <option value="异常日志">异常日志</option>
+                            <option value="0">登录日志</option>
+                            <option value="1">操作日志</option>
+                            <option value="2">异常日志</option>
                         </select>
                     </div>
                 </div>

@@ -30,7 +30,7 @@ public class LoginController extends BaseAction {
         return "index";
     }
 
-    @Log(logType = "登录日志", module = "用户登录", description = "用户登录 -> 用户登录")
+    @Log(logType = "0", module = "用户登录", description = "用户登录 -> 用户登录")
     @RequestMapping(value = "/login",method = RequestMethod.GET)
     public String login(){
         if (SecurityUtils.getSubject().isAuthenticated()){
@@ -39,7 +39,7 @@ public class LoginController extends BaseAction {
         return "login";
     }
 
-    @Log(logType = "登录日志", module = "用户登录", description = "用户登录 -> 用户登录")
+    @Log(logType = "0", module = "用户登录", description = "用户登录 -> 用户登录")
     @ResponseBody
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public BaseResult<Object> logining(@RequestBody LoginVo loginVo, HttpServletRequest request){

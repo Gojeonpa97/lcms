@@ -37,8 +37,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public IPage<UserEntity> queryUsers(UserEntity user) {
     	QueryWrapper<UserEntity> wrapper = new QueryWrapper<>();
-    	if(StringUtils.isNotBlank(String.valueOf(user.getSid()))){
-    		wrapper.like("id", user.getSid());
+    	if(StringUtils.isNotBlank(String.valueOf(user.getId()))){
+    		wrapper.like("id", user.getId());
     	}
     	if(StringUtils.isNotBlank(user.getUsername())){
     		wrapper.like("username", user.getUsername());
