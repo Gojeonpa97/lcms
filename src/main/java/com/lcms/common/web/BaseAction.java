@@ -12,7 +12,7 @@ public class BaseAction {
     public <T> BaseResult<T> returnSucceed(T t, String successMessage) {
         BaseResult<T> base = new BaseResult<T>();
         base.setSuccess(true);
-        base.setData(t);
+//        base.setData(t);
         base.setSuccessMessage(successMessage);
         return base;
     }

@@ -10,28 +10,27 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class ServiceException extends RuntimeException {
+public class ControllerException extends RuntimeException{
 
-    private static final long serialVersionUID = 7597648963886392921L;
+    private static final long serialVersionUID = 4759014652118970400L;
 
     private IEnum errorCode;
 
-    public ServiceException(String message){
+    public ControllerException(IEnum errorCode, String message) {
         super(message);
-    }
 
-    public ServiceException(IEnum errorCode,String message){
-        super(message);
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 
         String username = null;
 
         try {
-//            SpringUtils.getBean();
+//            SecurityApplication securityApplication = SpringUtils.getBean(SecurityApplication.class);
+
         } catch (Exception e) {// 如果登录则用户是为空
 //			e.printStackTrace();
             username = "";
         }
+
         String ip = IPUtils.getIpAddr(request);
 
         SysLog log = new SysLog();
@@ -43,8 +42,9 @@ public class ServiceException extends RuntimeException {
         SysLogDao sysLogDao = SpringUtils.getBean(SysLogDao.class);
         sysLogDao.insert(log);
 
-        this.errorCode=errorCode;
+        this.errorCode = errorCode;
     }
+
     public IEnum getErrorCode() {
         return errorCode;
     }
@@ -52,4 +52,5 @@ public class ServiceException extends RuntimeException {
     public void setErrorCode(IEnum errorCode) {
         this.errorCode = errorCode;
     }
+
 }

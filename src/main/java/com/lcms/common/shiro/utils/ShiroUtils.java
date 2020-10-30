@@ -17,7 +17,7 @@ public class ShiroUtils {
      *
      * @return 用户id
      */
-    public static Long getSysUserId() {
+    public static Integer getSysUserId() {
         return getSysUser().getSid();
     }
 }

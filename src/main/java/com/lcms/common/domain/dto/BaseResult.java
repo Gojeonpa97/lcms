@@ -45,14 +45,8 @@ public class BaseResult<T> implements Serializable {
      */
     private String successMessage;
 
-    /**
-     * 总条数
-     */
-    private long count;
-
     @Override
     public String toString() {
-
         ObjectMapper mapper = new ObjectMapper();
         String json = "";
         try {
@@ -60,7 +54,6 @@ public class BaseResult<T> implements Serializable {
         } catch (JsonProcessingException e) {
             return "";
         }
-
         return json;
     }
 }

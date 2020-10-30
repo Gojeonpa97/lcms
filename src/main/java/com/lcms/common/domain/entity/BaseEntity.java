@@ -1,5 +1,6 @@
 package com.lcms.common.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.lcms.common.domain.enums.DelFlagEnum;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -14,6 +15,7 @@ public class BaseEntity implements Serializable {
     /**
      * 主键SID
      */
+    @TableId(value = "sid")
     private Integer sid;
 
     /**
