@@ -18,8 +18,8 @@ public class SysRoleController extends BaseController {
     private SysRoleService sysRoleService;
 
     @RequestMapping(value = "v1/system/role/roles")
-    public BaseResult<Object> queryRoles(BaseVo baseVo){
-        List<SysRole> sysRoles = sysRoleService.queryRoles(baseVo);
+    public BaseResult<Object> queryRoles(SysRole sysRole){
+        List<SysRole> sysRoles = sysRoleService.queryRoles(sysRole);
         return returnSucceed(sysRoles);
     }
 
@@ -27,5 +27,15 @@ public class SysRoleController extends BaseController {
     public BaseResult<Object> delete(String id){
 //        sysRoleService.delete(id);
         return returnSucceed(null);
+    }
+
+    @RequestMapping(value = "v1/system/role/insert")
+    public void insert(SysRole sysRole){
+        sysRoleService.insetRole(sysRole);
+    }
+
+    @RequestMapping(value = "v1/system/role/update")
+    public void update(SysRole sysRole){
+        sysRoleService.update(sysRole);
     }
 }

@@ -17,7 +17,7 @@ public class UserEntity extends BaseVo implements Serializable{
     /**
      * 用户ID
      */
-    private Long id;
+    private Long Sid;
 
     /**
      * 登录账号
@@ -111,12 +111,12 @@ public class UserEntity extends BaseVo implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
-    public Long getId() {
-        return id;
+    public Long getSid() {
+        return Sid;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setSid(Long Sid) {
+        this.Sid = Sid;
     }
 
     public String getLoginName() {

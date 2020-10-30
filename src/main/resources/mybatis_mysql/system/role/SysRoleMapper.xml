@@ -96,6 +96,7 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.lcms.modules.system.role.domain.entity.SysRole">
     update sys_role
     <set>
+
       <if test="name != null">
         `name` = #{name,jdbcType=VARCHAR},
       </if>

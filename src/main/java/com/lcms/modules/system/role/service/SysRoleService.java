@@ -7,11 +7,31 @@ import java.util.List;
 
 public interface SysRoleService {
 
-    List<SysRole> queryRoles(BaseVo baseVo);
+    List<SysRole> queryRoles(SysRole sysRole);
 
     /**
      * 删除角色
      * @param id
      */
     void delete(String id);
+
+    /**
+     * 增加角色
+     * @param sysRole
+     * @return
+     */
+    int insetRole(SysRole sysRole);
+
+    /**
+     * 根据ID查信息
+     * @param id
+     * @return
+     */
+    SysRole selectById(Long id);
+
+    /**
+     * 修改角色
+     * @param sysRole
+     */
+    int update(SysRole sysRole);
 }
