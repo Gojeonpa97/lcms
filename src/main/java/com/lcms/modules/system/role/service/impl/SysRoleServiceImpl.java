@@ -40,6 +40,7 @@ public class SysRoleServiceImpl implements SysRoleService {
     }
 
     @Override
+<<<<<<< Updated upstream
     public int insetRole(SysRole sysRole) {
         UserEntity userInfo = (UserEntity) SecurityUtils.getSubject().getPrincipal();
         //sysRole.setSort(1);
@@ -63,4 +64,10 @@ public class SysRoleServiceImpl implements SysRoleService {
         //sysRole.setUpdateUser(userInfo.getUsername());
         return sysRoleDao.updateByPrimaryKeySelective(sysRole);
     }
+=======
+    public SysRole queryRoleBySid(String sid) {
+        SysRole sysRole = sysRoleDao.selectById(sid);
+        return sysRole;
+    }
+>>>>>>> Stashed changes
 }

@@ -29,6 +29,7 @@ public class SysRoleController extends BaseController {
         return returnSucceed(null);
     }
 
+
     @RequestMapping(value = "v1/system/role/insert")
     public void insert(SysRole sysRole){
         sysRoleService.insetRole(sysRole);
@@ -37,5 +38,10 @@ public class SysRoleController extends BaseController {
     @RequestMapping(value = "v1/system/role/update")
     public void update(SysRole sysRole){
         sysRoleService.update(sysRole);
+
+    @RequestMapping(value = "v1/system/role/queryRoleBySid")
+    public BaseResult<Object> queryRoleBySid(String sid){
+        SysRole sysRole = sysRoleService.queryRoleBySid(sid);
+        return returnSucceed(sysRole);
     }
 }

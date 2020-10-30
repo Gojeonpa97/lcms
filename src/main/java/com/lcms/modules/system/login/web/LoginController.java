@@ -25,10 +25,6 @@ public class LoginController extends BaseAction {
     @Autowired
     private LoginService loginService;
 
-    @RequestMapping(value = "/index")
-    public String index(){
-        return "index";
-    }
 
     @Log(logType = "0", module = "用户登录", description = "用户登录 -> 用户登录")
     @RequestMapping(value = "/login",method = RequestMethod.GET)
@@ -46,9 +42,12 @@ public class LoginController extends BaseAction {
         return this.loginService.login(loginVo,request);
     }
 
+    @ResponseBody
     @RequestMapping(value = "/logout")
-    public void logout(){
-        Subject subject = SecurityUtils.getSubject();
-        subject.logout();
+    public BaseResult<Object> logout(){
+        BaseResult<Object> result = new BaseResult<>();
+        this.loginService.logout();
+        result.setSuccess(true);
+        return result;
     }
 }

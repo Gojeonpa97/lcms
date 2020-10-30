@@ -66,7 +66,7 @@
                         <dd><a lay-href="/sys/userCenter">个人中心</a></dd>
                         <dd><a lay-href=onclick="resetPassword()">修改密码</a></dd>
                         <hr>
-                        <dd style="text-align: center;"><a lay-href="/logout">退出</a></dd>
+                        <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>
                     </dl>
                 </li>
 
@@ -137,7 +137,6 @@
         url: '/sys/menu/findAllMenuByUserId',
         data: '',
         success: function (data) {
-            console.log(data)
             $.each(data.data ,function (index, menu){
                 menuLi += '<li class = "layui-nav-item" >';
                 menuLi += '<a href="javascript:;" lay-tips= "'+menu.name+'" >';
@@ -160,25 +159,32 @@
         error: function (data) {
         }
     });
-function logout() {
-    $.ajax({
-        type: 'POST',
-        url: '/logout',
-        data: '',
-        success: function (data) {
-            window.location.href = "/login"
-        },
-        error: function (data) {
-        }
-    });
-}
 </script>
 <script>
     layui.config({
         base: '${staticPath}/' //静态资源所在路径
     }).extend({
-        index: 'common/js/lib/index' //主入口模块
-    }).use('index');
+        index: 'lib/index' //主入口模块
+    }).use('index',function () {
+        var admin = layui.admin;
+        //退出
+        admin.events.logout = function(){
+            //执行退出接口
+            admin.req({
+                url: 'logout'
+                ,type: 'get'
+                ,data: {}
+                ,success: function(res){ //这里要说明一下：done 是只有 response 的 code 正常才会执行。而 succese 则是只要 http 为 200 就会执行
+                    console.log(res);
+
+                    //清空本地记录的 token，并跳转到登入页
+                    admin.exit(function(){
+                        location.href = 'login';
+                    });
+                }
+            });
+        };
+    });
 </script>
 </body>
 </html>

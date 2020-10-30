@@ -34,7 +34,18 @@ layui.define('view', function(exports){
     
     //清除本地 token，并跳转到登入页
     ,exit: view.exit
-    
+        /**
+         * 从url上获取参数
+         * @param {Object} name
+         */
+        ,getParamByUrl : function (name) {
+          var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+          var r = window.location.search.substr(1).match(reg);
+          if (r != null) {
+            return unescape(r[2]);
+          }
+          return null;
+        }
     //xss 转义
     ,escape: function(html){
       return String(html || '').replace(/&(?!#?[a-zA-Z0-9]+;)/g, '&amp;')
@@ -629,7 +640,7 @@ layui.define('view', function(exports){
     }
     
     //常规版默认开启多标签页
-    if(!('pageTabs' in layui.setter)) layui.setter.pageTabs = true;
+    if(!('pageTabs' in layui.setter)) layui.setter.pageTabs = false;
     
     //不开启页面标签时
     if(!setter.pageTabs){

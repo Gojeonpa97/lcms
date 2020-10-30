@@ -21,7 +21,7 @@ public class SysMenuServiceImpl implements SysMenuService {
     @Override
     public List<SysMenuDto> findAllMenuByUserId() {
         List<SysMenuDto> resultList = Lists.newArrayList();
-        List<SysMenuDto> allMenuByUser = sysMenuDao.findAllMenuByUserId(String.valueOf(ShiroUtils.getSysUserId()));
+        List<SysMenuDto> allMenuByUser = sysMenuDao.findAllMenuByUserId("1");
         for (SysMenuDto menuDto : allMenuByUser){
             if("0".equals(menuDto.getPid())){
                 menuDto.setChildrenMenus(menuChild(menuDto.getSid(),allMenuByUser));

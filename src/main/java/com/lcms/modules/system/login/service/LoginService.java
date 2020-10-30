@@ -8,4 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 public interface LoginService {
 
      BaseResult<Object> login(LoginVo loginVo, HttpServletRequest request);
+
+     void logout();
 }

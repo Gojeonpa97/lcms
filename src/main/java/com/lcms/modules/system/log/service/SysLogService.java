@@ -1,7 +1,7 @@
 package com.lcms.modules.system.log.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.lcms.common.domain.vo.BaseVo;
+import com.lcms.common.domain.dto.BasePageDto;
+import com.lcms.modules.system.log.domain.dto.SysLogDto;
 import com.lcms.modules.system.log.domain.entity.SysLog;
 import org.aspectj.lang.ProceedingJoinPoint;
 
@@ -18,7 +18,7 @@ public interface SysLogService {
      */
     void save(ProceedingJoinPoint joinPoint,String methodName, String logType, String module, String description);
 
-    IPage<SysLog> queryLogs(SysLog sysLog,BaseVo baseVo);
+    BasePageDto<SysLog> queryLogs(SysLogDto sysLog);
 
     void delete(List<String> ids);
 }

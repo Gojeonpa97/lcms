@@ -17,5 +17,5 @@
 <c:set var="adminPath" value="${basePath}/${ManagerConst.adminPath}" />
 --%>
 <c:set var="staticPath" value="${basePath}/static" />
-
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
 <c:set var="currentTimeMillis" value="<%=System.currentTimeMillis()%>" />

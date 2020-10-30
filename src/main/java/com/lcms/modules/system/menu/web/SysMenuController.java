@@ -36,4 +36,11 @@ public class SysMenuController extends BaseController {
         List<SysMenu> allMenu = sysMenuService.findAllMenu();
         return returnSucceed(allMenu);
     }
+
+    @RequestMapping(value = "/queryRoleMenuBySid")
+    public BaseResult<Object> queryRoleMenuBySid(String sid){
+
+        return returnSucceed(null);
+    }
+
 }

@@ -54,4 +54,10 @@ public class LoginServiceImpl implements LoginService {
             throw new ServiceException(e.getMessage());
         }
     }
+
+    @Override
+    public void logout() {
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+    }
 }

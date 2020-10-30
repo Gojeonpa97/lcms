@@ -18,7 +18,7 @@ layui.define(['layer','table','element','index', 'form'], function(exports){
     }
     ,cols: [[
       {type: 'checkbox', fixed: 'left'}
-      ,{field: 'id', width: 80, title: 'ID', sort: true}
+      ,{field: 'sid', width: 80, title: 'ID', sort: true}
       ,{field: 'loginName', title: '登录名称'}
       ,{field: 'username', title: '用户名称'}
       ,{field: 'email', title: '邮箱'}
@@ -106,15 +106,13 @@ layui.define(['layer','table','element','index', 'form'], function(exports){
               ,btn: ['确定', '取消']
               ,yes: function(index, layero){
                 var iframeWindow = window['layui-layer-iframe'+ index]
-                ,submitID = 'LAY-user-front-submit'
-                ,submit = layero.find('iframe').contents().find('#'+ submitID);
+                ,submit = layero.find('iframe').contents().find('#LAY-user-front-submit');
                 
                 //监听提交
-                 iframeWindow.layui.form.on('submit('+ submitID +')', function(data){                	 
-                  var field = data.field; //获取提交的字段
+                 iframeWindow.layui.form.on('submit(LAY-user-front-submit)', function(data){
+                     var field = data.field; //获取提交的字段
                   
                   //提交 Ajax 成功后，静态更新表格中的数据
-                  //$.ajax({});
                  $.ajax({
                 	 type:"post",
                 	 url:"/v1/system/user/insert",
@@ -130,6 +128,34 @@ layui.define(['layer','table','element','index', 'form'], function(exports){
                 submit.trigger('click');
               }
             }); 
+          }
+          ,batchdel:function () {
+          var checkStatus = table.checkStatus('LAY-user-manage')
+              ,checkData = checkStatus.data;
+              if(checkData.length === 0){
+                  return layer.msg('请选择数据');
+              }
+          var params = [];
+              layer.confirm('确定删除吗？', function(index) {
+                  $.each(checkData,function (k,v) {
+                      params.push(v.sid);
+                  });
+                  $.ajax({
+                      url: '/v1/system/user/delete'
+                      ,type: 'post'
+                      ,data: JSON.stringify(params)
+                      , headers: {
+                          "Content-Type": "application/json;charse=UTF-8"
+                      }
+                      ,success: function(res) {
+                          table.reload('LAY-user-manage');
+                          layer.msg('已删除', {
+                              icon: 1
+                              , shade: 0
+                          })
+                      }
+                  });
+              });
           }
         };
         $('.layui-btn.layuiadmin-btn-useradmin').on('click', function(){

@@ -1,8 +1,9 @@
 package com.lcms.modules.system.user.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.lcms.common.domain.vo.BaseVo;
+import com.lcms.common.domain.dto.BasePageDto;
+import com.lcms.modules.system.user.domain.dto.PwdDto;
 import com.lcms.modules.system.user.domain.entity.UserEntity;
+import com.lcms.modules.system.user.domain.vo.UserQueryVo;
 
 import java.util.List;
 
@@ -11,13 +12,25 @@ public interface UserService {
 
     UserEntity findUserByName(String username);
 
-    IPage<UserEntity> queryUsers(UserEntity user);
+    BasePageDto<UserEntity> queryUsers(UserQueryVo userQueryVo);
 
-    void delete(Long id);
+    void delete(List<String> sids);
     
-    int insertUser(UserEntity user);
+    void insert(UserEntity user);
+    
+    void update(UserEntity record);
 
-    UserEntity selectByPrimaryKey(Long id);
-    
-    int updateByPrimaryKey(UserEntity record);
+    /**
+     * 重置密码
+     * @param
+     * @return
+     */
+    void updatePwd(PwdDto pwdDto);
+
+    /**
+     * 重置密码
+     * @param
+     * @return
+     */
+    void resetPwd(List<String> sids);
 }

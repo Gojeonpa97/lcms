@@ -3,21 +3,23 @@ package com.lcms.modules.system.user.domain.entity;
 
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.lcms.common.domain.entity.BaseEntity;
+import com.lcms.common.domain.enums.DelFlagEnum;
 import com.lcms.common.domain.vo.BaseVo;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
  * sys_user
  * @author 
  */
+@Getter
+@Setter
 @TableName(value = "sys_user")
-public class UserEntity extends BaseVo implements Serializable{
-    /**
-     * 用户ID
-     */
-    private Long Sid;
+public class UserEntity extends BaseEntity {
+
 
     /**
      * 登录账号
@@ -70,11 +72,6 @@ public class UserEntity extends BaseVo implements Serializable{
     private String status;
 
     /**
-     * 删除标志（0代表存在 1代表删除）
-     */
-    private String delFlag;
-
-    /**
      * 最后登陆IP
      */
     private String loginIp;
@@ -85,39 +82,12 @@ public class UserEntity extends BaseVo implements Serializable{
     private Date loginDate;
 
     /**
-     * 创建者
-     */
-    private String createUser;
-
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 更新者
-     */
-    private String updateUser;
-
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
-
-    /**
      * 备注说明
      */
     private String description;
 
     private static final long serialVersionUID = 1L;
 
-    public Long getSid() {
-        return Sid;
-    }
-
-    public void setSid(Long Sid) {
-        this.Sid = Sid;
-    }
 
     public String getLoginName() {
         return loginName;
@@ -199,14 +169,6 @@ public class UserEntity extends BaseVo implements Serializable{
         this.status = status;
     }
 
-    public String getDelFlag() {
-        return delFlag;
-    }
-
-    public void setDelFlag(String delFlag) {
-        this.delFlag = delFlag;
-    }
-
     public String getLoginIp() {
         return loginIp;
     }
@@ -223,43 +185,5 @@ public class UserEntity extends BaseVo implements Serializable{
         this.loginDate = loginDate;
     }
 
-    public String getCreateUser() {
-        return createUser;
-    }
 
-    public void setCreateUser(String createUser) {
-        this.createUser = createUser;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getUpdateUser() {
-        return updateUser;
-    }
-
-    public void setUpdateUser(String updateUser) {
-        this.updateUser = updateUser;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }

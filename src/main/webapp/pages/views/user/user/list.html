@@ -131,14 +131,16 @@
           ,area: ['500px', '450px']
           ,btn: ['确定', '取消']
           ,yes: function(index, layero){
+            var addTplForm = layer.getChildFrame('layui-layer-iframe', index);
             var iframeWindow = window['layui-layer-iframe'+ index]
             ,submitID = 'LAY-user-front-submit'
             ,submit = layero.find('iframe').contents().find('#'+ submitID);
-
+            console.log(submit)
+            console.log(addTplForm)
             //监听提交
             iframeWindow.layui.form.on('submit('+ submitID +')', function(data){
               var field = data.field; //获取提交的字段
-              
+              console.log(field)
               //提交 Ajax 成功后，静态更新表格中的数据
               //$.ajax({});
               table.reload('LAY-user-front-submit'); //数据刷新

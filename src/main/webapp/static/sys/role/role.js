@@ -15,7 +15,7 @@ layui.define(['layer','table', 'form'], function(exports){
     }
     ,cols: [[
       {type: 'checkbox', fixed: 'left'}
-      ,{field: 'id', width: 80, title: 'ID', sort: true}
+      ,{field: 'sid', width: 80, title: 'ID', sort: true}
       ,{field: 'name', title: '角色名'}
       ,{field: 'sort', title: '顺序'}
       ,{field: 'status', title: '角色状态', templet: '#statusTpl', unresize: true}
@@ -56,22 +56,21 @@ layui.define(['layer','table', 'form'], function(exports){
         layer.close(index);
       });
     }else if(obj.event === 'edit'){
-      var tr = $(obj.tr);
-
+      var sid =data.sid
       layer.open({
         type: 2
         ,title: '编辑角色'
-        ,content: '/pages/views/menu.html'
+        ,content: '/sys/roleTree?sid='+sid
         ,area: ['500px', '480px']
         ,btn: ['确定', '取消']
         ,yes: function(index, layero){
+
           var iframeWindow = window['layui-layer-iframe'+ index]
               ,submit = layero.find('iframe').contents().find("#LAY-user-role-submit");
 
           //监听提交
           iframeWindow.layui.form.on('submit(LAY-user-role-submit)', function(data){
             var field = data.field; //获取提交的字段
-
             //提交 Ajax 成功后，静态更新表格中的数据
             //$.ajax({});
             table.reload('LAY-user-back-role'); //数据刷新
@@ -81,6 +80,8 @@ layui.define(['layer','table', 'form'], function(exports){
           submit.trigger('click');
         }
         ,success: function(layero, index){
+          var role = layer.getChildFrame('#layuiadmin-form-role', index);
+
 
         }
       })
@@ -95,9 +96,6 @@ layui.define(['layer','table', 'form'], function(exports){
     batchdel: function(){
       var checkStatus = table.checkStatus('LAY-user-back-role')
           ,checkData =checkStatus.data; //得到选中的数据
-      for(i = 0,i < checkData.length;i++;){
-        console.log(checkData[i])
-      };
       if(checkData.length === 0){
         return layer.msg('请选择数据');
       }

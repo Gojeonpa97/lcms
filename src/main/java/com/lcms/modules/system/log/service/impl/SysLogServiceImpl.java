@@ -4,10 +4,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.enums.SqlLike;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lcms.common.application.BaseApplication;
+import com.lcms.common.domain.dto.BasePageDto;
 import com.lcms.common.domain.vo.BaseVo;
+import com.lcms.common.exception.ServiceException;
 import com.lcms.common.utils.IPUtils;
 import com.lcms.modules.system.log.dao.SysLogDao;
+import com.lcms.modules.system.log.domain.dto.SysLogDto;
 import com.lcms.modules.system.log.domain.entity.SysLog;
+import com.lcms.modules.system.log.domain.enums.LogErrorCode;
 import com.lcms.modules.system.log.service.SysLogService;
 import eu.bitwalker.useragentutils.UserAgent;
 import org.apache.commons.lang3.StringUtils;
@@ -24,7 +29,7 @@ import java.util.Enumeration;
 import java.util.List;
 
 @Service
-public class SysLogServiceImpl implements SysLogService {
+public class SysLogServiceImpl extends BaseApplication implements SysLogService {
 
     @Autowired
     private SysLogDao sysLogDao;
@@ -48,11 +53,11 @@ public class SysLogServiceImpl implements SysLogService {
         log.setBrowser(userAgent.getBrowser().getName());
         log.setCreateTime(new Date());
         log.setContent(operateContent(joinPoint, methodName, ip, request));
-        //sysLogDao.insert(log);
+//        sysLogDao.insert(log);
     }
 
     @Override
-    public IPage<SysLog> queryLogs(SysLog sysLog,BaseVo baseVo) {
+    public BasePageDto<SysLog> queryLogs(SysLogDto sysLog) {
         QueryWrapper<SysLog> wrapper = new QueryWrapper<>();
         if(StringUtils.isNoneBlank(sysLog.getModule())){
             wrapper.like("module",sysLog.getModule());
@@ -60,8 +65,8 @@ public class SysLogServiceImpl implements SysLogService {
         if(StringUtils.isNotBlank(sysLog.getLogType())){
             wrapper.like("log_type",sysLog.getLogType());
         }
-        IPage<SysLog> sysLogIPage = sysLogDao.selectPage(new Page<>(baseVo.getPageSize(),baseVo.getPageNum()), wrapper);
-        return sysLogIPage;
+        IPage<SysLog> sysLogIPage = sysLogDao.selectPage(new Page<>(sysLog.getPageNum(),sysLog.getPageSize()), wrapper);
+        return returnBaseResult(sysLogIPage.getRecords(),sysLogIPage.getTotal());
     }
 
     @Override
@@ -69,8 +74,9 @@ public class SysLogServiceImpl implements SysLogService {
         for(String id : ids){
             SysLog sysLog = sysLogDao.selectById(id);
             if(sysLog == null){
-
+                throw new ServiceException(LogErrorCode.E22402,LogErrorCode.E22402.getText());
             }
+            sysLogDao.delete(null);
         }
 
     }

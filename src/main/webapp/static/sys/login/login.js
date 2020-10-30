@@ -37,7 +37,6 @@ layui.define(['layer','table','element', 'form'], function(exports){
             "Content-Type": "application/json;charse=UTF-8"
         }
       ,success: function(res){
-        console.log(res);
         //请求成功后，写入 access_token
         // layui.data(setter.tableName, {
         //   key: setter.request.tokenName
@@ -50,7 +49,7 @@ layui.define(['layer','table','element', 'form'], function(exports){
            ,icon: 1
            ,time: 1000
          }, function(){
-           location.href = '/index'; //后台主页
+           location.href = 'index'; //后台主页
          });
        }else{
          layer.msg(res.errorMessage)
