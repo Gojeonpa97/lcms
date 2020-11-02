@@ -1,5 +1,6 @@
 package com.lcms.modules.system.role.service;
 
+import com.lcms.common.domain.dto.BasePageDto;
 import com.lcms.common.domain.vo.BaseVo;
 import com.lcms.modules.system.role.domain.entity.SysRole;
 
@@ -7,13 +8,13 @@ import java.util.List;
 
 public interface SysRoleService {
 
-    List<SysRole> queryRoles(SysRole sysRole);
+    BasePageDto<SysRole> queryRoles(SysRole sysRole);
 
     /**
      * 删除角色
      * @param id
      */
-    void delete(String id);
+    void delete(List<String> sids);
 
     /**
      * 增加角色

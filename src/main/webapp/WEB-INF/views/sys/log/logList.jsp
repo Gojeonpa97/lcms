@@ -192,7 +192,6 @@ $(function () {
         $.each(row, function(k, v) {
             params.push(v.sid);
         });
-        console.log(params)
         $.showConfirm('确定要删除吗？', function() {
             $.RestSyncAjax('/v1/system/log/deleteLog','POST',params,function (result) {
                 if(result.success){
